@@ -8,7 +8,12 @@
 <body>
 
 <div class="container">
+	<br/>
+
+
 	@yield('content')
+
+
 </div>
 
 </body>

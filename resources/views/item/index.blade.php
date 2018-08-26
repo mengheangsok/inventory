@@ -1,95 +1,59 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+@extends('layouts.app')
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+@section('content')
+<h2>ITEMS</h2>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+<div class="card">
+  <div class="card-body">
 
-            .full-height {
-                height: 100vh;
-            }
+            @include('component.alert')        
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
 
-            .position-ref {
-                position: relative;
-            }
+      <a href="{{ url('/item/create') }}" class="btn btn-primary float-right">Add New</a> 
+      <h2 class="card-title">Lists </h2>
+    
+      <table class="table">
+          <thead>
+              <tr>
+                   <th>#</th>
+                  <th>Code</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Category</th>
+                  <th>Option</th>
+              </tr>
+          </thead>
+          <tbody>
+            @php
+                $n = 1;
+            @endphp
+              @foreach($items as $item)
+                <tr>
+                    <td>{{ $n }}</td>
+                    <td>{{ $item->code }}</td>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->price }}</td>
+                    <td>{{ $item->category->name }}</td>
+                    <td>
+                        <a href="{{ url('/item/edit/'.$item->id) }}" class="btn btn-info btn-sm">Edit</a>
+                        <form action="{{ url('/item/delete/'.$item->id) }}" method="post">
+                            @csrf
+                            {{ method_field('DELETE') }}
+                            <button onclick="return confirm('Are you sure?')" type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                @php
+                    $n++;
+                @endphp
+              @endforeach
+          </tbody>
+      </table>
+        {{ $items->links() }}
+  </div>
+</div>
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+@endsection
 
-            .content {
-                text-align: center;
-            }
 
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    {{ $hello_world }}
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
