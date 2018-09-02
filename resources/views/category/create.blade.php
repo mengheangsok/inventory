@@ -3,7 +3,6 @@
 @section('content')
 @include('component.alert')        
 
-
 <form action="{{ route('category.store') }}" method="post">
 {!! csrf_field() !!}
 

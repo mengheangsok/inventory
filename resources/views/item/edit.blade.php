@@ -37,6 +37,17 @@
 			      <input value="{{ old('price',$item->price) }}" name="price" type="text" class="form-control" placeholder="Enter Price">
 			    </div>
 			  </div>
+        <div class="form-group row">
+          <label for="category" class="col-sm-2 col-form-label">Category</label>
+          <div class="col-sm-10">
+            <select name="category_id" class="form-control">
+              <option value="">Choose</option>
+              @foreach($categories as $category)
+                <option {{ $category->id == old('category_id',$item->category_id) ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
 			  <div class="form-group row">
 			  	<div class="col-sm-2 sm-offset-10">
 				  <button type="submit" class="btn btn-primary">Update</button>

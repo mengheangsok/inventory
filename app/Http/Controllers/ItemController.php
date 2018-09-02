@@ -32,7 +32,6 @@ class ItemController extends Controller
     		'name' => 'required|min:3',
     		'price' => 'required|numeric',
     		'code' => 'required|unique:items|max:10',
-            'category_id' => 'required',
      	]);
 
         $item = New Item;

@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
-<h2>ITEMS</h2>
+<h2>Users</h2>
 
 <div class="card">
   <div class="card-body">
@@ -14,35 +14,35 @@
        	<div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Name</label>
           <div class="col-sm-10">
-            <input value="{{ old('name') }}" name="name" type="text" class="form-control @if($errors->has('name')) is-invalid @endif" placeholder="Enter Code">
+            <input value="{{ old('name') }}" name="name" type="text" class="form-control @if($errors->has('name')) is-invalid @endif" placeholder="Enter email">
             @if($errors->has('name')) 
                     <span class="invalid-feedback">{{ $errors->first('name') }}</span>
               @endif
           </div>
         </div>
 			  <div class="form-group row">
-			    <label for="code" class="col-sm-2 col-form-label">Code</label>
+			    <label for="email" class="col-sm-2 col-form-label">Email</label>
 			    <div class="col-sm-10">
-			      <input value="{{ old('code') }}" name="code" type="text" class="form-control @if($errors->has('code')) is-invalid @endif" placeholder="Enter Code">
-            @if($errors->has('code')) 
-                    <span class="invalid-feedback">{{ $errors->first('code') }}</span>
+			      <input value="{{ old('email') }}" name="email" type="text" class="form-control @if($errors->has('email')) is-invalid @endif" placeholder="Enter email">
+            @if($errors->has('email')) 
+                    <span class="invalid-feedback">{{ $errors->first('email') }}</span>
               @endif
 			    </div>
 			  </div>
 			  <div class="form-group row">
-			    <label for="code" class="col-sm-2 col-form-label">Price</label>
+			    <label for="email" class="col-sm-2 col-form-label">Password</label>
 			    <div class="col-sm-10">
-			      <input value="{{ old('price') }}" name="price" type="text" class="form-control" placeholder="Enter Price">
+			      <input value="{{ old('password') }}" name="password" type="password" class="form-control" placeholder="Enter password">
 			    </div>
 			  </div>
 
          <div class="form-group row">
-          <label for="category" class="col-sm-2 col-form-label">Category</label>
+          <label for="location_id" class="col-sm-2 col-form-label">Location</label>
           <div class="col-sm-10">
-            <select name="category_id" class="form-control" name="category_id">
+            <select name="location_id" class="form-control" name="location_id" multiple> 
               <option value="">Choose</option>
-              @foreach($categories as $category)
-                <option {{ $category->id == old('category_id') ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
+              @foreach($locations as $location)
+                <option {{ $location->id == old('location_id') ? 'selected' : '' }} value="{{ $location->id }}">{{ $location->name }}</option>
               @endforeach
             </select>
           </div>

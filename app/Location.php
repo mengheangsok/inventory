@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Location extends Model
 {
     protected $fillable = ['name'];
 
-    public function item()
+    public function user()
     {
-    	return $this->hasMany('App\Item');
+    	return $this->belongsToMany('App\User');
     }
 }

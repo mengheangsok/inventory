@@ -2,14 +2,15 @@
 @extends('layouts.app')
 
 @section('content')
-<h2>Categories</h2>
+<h2>Users</h2>
 
 <div class="card">
   <div class="card-body">
 
-      @include('component.alert')        
+            @include('component.alert')        
 
-      <a href="{{ url('/category/create') }}" class="btn btn-primary float-right">Add New</a> 
+
+      <a href="{{ url('/user/create') }}" class="btn btn-primary float-right">Add New</a> 
       <h2 class="card-title">Lists </h2>
     
       <table class="table">
@@ -17,7 +18,8 @@
               <tr>
                    <th>#</th>
                   <th>Name</th>
-                  <th>Items</th>
+                  <th>Email</th>
+                  <th>Location</th>
                   <th>Option</th>
               </tr>
           </thead>
@@ -25,20 +27,16 @@
             @php
                 $n = 1;
             @endphp
-              @foreach($categories as $category)
+              @foreach($users as $user)
                 <tr>
                     <td>{{ $n }}</td>
-                    <td>{{ $category->name }}</td>
+                    <td>{{ $user->code }}</td>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->price }}</td>
+                    <td>{{ $user->category->name }}</td>
                     <td>
-                      <ul>
-                        @foreach($category->item as $item)
-                          <li>{{ $item->name }}</li>
-                        @endforeach
-                      </ul>
-                    </td>
-                    <td>
-                        <a href="{{ url('/category/edit/'.$category->id) }}" class="btn btn-info btn-sm">Edit</a>
-                        <form action="{{ url('/category/delete/'.$category->id) }}" method="post">
+                        <a href="{{ url('/user/edit/'.$user->id) }}" class="btn btn-info btn-sm">Edit</a>
+                        <form action="{{ url('/user/delete/'.$user->id) }}" method="post">
                             @csrf
                             {{ method_field('DELETE') }}
                             <button onclick="return confirm('Are you sure?')" type="submit" class="btn btn-sm btn-danger">Delete</button>
@@ -51,7 +49,7 @@
               @endforeach
           </tbody>
       </table>
-        {{ $categories->links() }}
+        {{ $users->links() }}
   </div>
 </div>
 
