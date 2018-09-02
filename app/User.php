@@ -29,6 +29,6 @@ class User extends Authenticatable
 
     public function location()
     {
-    	return $this->belongsToMany('App\Location');
+    	return $this->belongsToMany('App\Location')->withTimestamps();
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Location;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {
@@ -42,7 +43,20 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        
+
+        $user = new User();
+
+        $user->fill($request->all());
+
+        $user->password = bcrypt($request->password);
+
+        $user->save();
+
+
+        $user->location()->attach($request->location_id ? : []);
+
+
+        return redirect()->back()->withSuccess('Successfull Created');
     }
 
     /**
@@ -64,7 +78,14 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $user = User::find($id);
+
+        $location_users = $user->location->pluck('id')->toArray();
+
+        $locations = Location::all();
+
+        return view('user.edit',compact('user','locations','location_users'));
     }
 
     /**
@@ -74,9 +95,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
-        //
+        $user = User::find($id);
+
+        $user->fill($request->all());
+
+        $user->save();
+
+
+        $user->location()->sync($request->location_id ? : []);
+
+
+        return redirect()->back()->withSuccess('Successfull Created');
     }
 
     /**
@@ -87,6 +118,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+
+        $user->delete();
+
+        return redirect()->back()->withSuccess('Successfull Deleted');
+
     }
 }

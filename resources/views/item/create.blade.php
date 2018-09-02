@@ -3,13 +3,13 @@
 
 @section('content')
 <h2>ITEMS</h2>
-
+<?php  var_dump($errors) ?>
 <div class="card">
   <div class="card-body">
       <a href="{{ url('/item') }}" class="btn btn-secondary float-right">Return</a> 
       <h2 class="card-title">Create </h2>
         @include('component.alert')        
-       <form action="{{ url('/item/store') }}" method="post">
+       <form action="{{ url('/item/store') }}" method="post" enctype="multipart/form-data">
        		@csrf
        	<div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Name</label>
@@ -33,6 +33,12 @@
 			    <label for="code" class="col-sm-2 col-form-label">Price</label>
 			    <div class="col-sm-10">
 			      <input value="{{ old('price') }}" name="price" type="text" class="form-control" placeholder="Enter Price">
+			    </div>
+			  </div>
+			  <div class="form-group row">
+			    <label for="image" class="col-sm-2 col-form-label">Thumnail</label>
+			    <div class="col-sm-10">
+			      <input value="{{ old('image') }}" name="image" type="file" class="form-control" placeholder="Enter Browse Image">
 			    </div>
 			  </div>
 

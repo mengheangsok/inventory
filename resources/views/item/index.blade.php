@@ -17,6 +17,7 @@
           <thead>
               <tr>
                    <th>#</th>
+                  <th>Image</th>
                   <th>Code</th>
                   <th>Name</th>
                   <th>Price</th>
@@ -31,6 +32,7 @@
               @foreach($items as $item)
                 <tr>
                     <td>{{ $n }}</td>
+                    <td><img width="50px" src="{{ asset('/images/'.$item->image) }}"></td>
                     <td>{{ $item->code }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->price }}</td>

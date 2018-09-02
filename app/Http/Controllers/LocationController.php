@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
 use Illuminate\Http\Request;
-use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\locationRequest;
+use App\Location;
 
-class CategoryController extends Controller
+class LocationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(2);
+        $locations = Location::paginate(2);
 
-        return view('category.index',compact('categories'));
+        return view('location.index',compact('locations'));
     }
 
     /**
@@ -27,7 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('/category/create');
+        return view('/location/create');
     }
 
     /**
@@ -36,13 +36,13 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store(LocationRequest $request)
     {
-        $category = New Category();
+        $location = New Location();
 
-        $category->fill($request->all());
+        $location->fill($request->all());
 
-        $category->save();
+        $location->save();
 
         return redirect()->back()->withSuccess('Successfull Created');
     }
@@ -50,45 +50,52 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param  \App\location  $location
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show(Location $location)
     {
-        //
+        return view('location.show',compact('location'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param  \App\location  $location
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(location $location)
     {
-        //
+        return view('location.edit',compact('location'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
+     * @param  \App\location  $location
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(LocationRequest $request, location $location)
     {
-        //
+
+        $location->fill($request->all());
+
+        $location->save();
+
+        return redirect('/location/'.$location->id)->withSuccess('Successfull Updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Category  $category
+     * @param  \App\location  $location
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(location $location)
     {
-        //
+        $location->delete();
+
+        return redirect()->back()->withSuccess('Successfull Deleted');
     }
 }

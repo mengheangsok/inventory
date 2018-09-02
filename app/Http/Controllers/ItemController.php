@@ -31,13 +31,18 @@ class ItemController extends Controller
     	$request->validate([
     		'name' => 'required|min:3',
     		'price' => 'required|numeric',
-    		'code' => 'required|unique:items|max:10',
-     	]);
-
+            'code' => 'required|unique:items|max:10',
+            'image' => 'mimes:jpeg,png,jpg',
+         ]);
+         
+        $image_name = time().'.'. $request->image->getClientOriginalExtension();
+         
         $item = New Item;
         $item->fill($request->all());
+        $item->image = $image_name;
         $item->save();
 
+        $request->image->move(public_path('images'),$image_name);
 
     	// Item::create([
     	// 	'name' => $request->name,

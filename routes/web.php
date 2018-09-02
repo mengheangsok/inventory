@@ -24,5 +24,6 @@ Route::patch('/item/update/{id}','ItemController@update');
 Route::delete('/item/delete/{id}','ItemController@delete');
 
 
+Route::resource('/location','LocationController');
 Route::resource('/category','CategoryController');
 Route::resource('/user','UserController');
