@@ -7,6 +7,8 @@ use App\User;
 use App\Location;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Mail;
+use Auth;
 
 class UserController extends Controller
 {
@@ -54,6 +56,12 @@ class UserController extends Controller
 
 
         $user->location()->attach($request->location_id ? : []);
+
+        Mail::send('emails.welcome', ['user' => $user], function ($m) use ($user) {
+            // $m->from('learninglaraveltest@gmail.com', 'Inventory');
+
+            $m->to($user->email)->subject('Register User');
+        });
 
 
         return redirect()->back()->withSuccess('Successfull Created');

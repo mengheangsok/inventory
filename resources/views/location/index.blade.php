@@ -37,13 +37,15 @@
                         </ul>
                     </td>
                     <td>
-                        <a href="{{ url('/location/'.$location->id) }}" class="btn btn-secondary btn-sm">Details</a>
-                        <a href="{{ url('/location/'.$location->id.'/edit') }}" class="btn btn-info btn-sm">Edit</a>
+                        <div class="row">
+                        <a href="{{ url('/location/'.$location->id) }}" class="btn btn-secondary btn-sm mr-2">Details</a>
+                        <a href="{{ url('/location/'.$location->id.'/edit') }}" class="btn btn-info btn-sm mr-2">Edit</a>
                         <form action="{{ url('/location/'.$location->id) }}" method="post">
                             @csrf
                             {{ method_field('DELETE') }}
-                            <button onclick="return confirm('Are you sure?')" type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            <button onclick="return confirm('Are you sure?')" type="submit" class="btn btn-sm btn-danger float-left">Delete</button>
                         </form>
+                        </div>
                     </td>
                 </tr>
                 @php

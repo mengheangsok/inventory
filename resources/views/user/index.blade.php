@@ -17,6 +17,7 @@
           <thead>
               <tr>
                    <th>#</th>
+                  <th>Status</th>
                   <th>Name</th>
                   <th>Email</th>
                   <th>Location</th>
@@ -30,6 +31,15 @@
               @foreach($users as $user)
                 <tr>
                     <td>{{ $n }}</td>
+                    <td>
+                        @if($user->status == 0)
+                            <span class="label label-default">Inactive</span>
+                        @elseif($user->status == 1)
+                            <span class="label label-success">Active</span>
+                        @else
+                            <span class="label label-warning">Waiting Approval</span>
+                        @endif
+                    </td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>

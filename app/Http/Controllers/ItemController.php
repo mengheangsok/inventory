@@ -9,6 +9,7 @@ use DB;
 
 class ItemController extends Controller
 {
+
     public function index()
     {
         // $items = DB::table('items')->orderBy('id','desc')->paginate(2);

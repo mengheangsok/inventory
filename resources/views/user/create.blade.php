@@ -52,7 +52,7 @@
          <div class="form-group row">
           <label for="location_id" class="col-sm-2 col-form-label">Location</label>
           <div class="col-sm-10">
-            <select name="location_id[]" class="form-control @if($errors->has('location_id')) is-invalid @endif name="location_id" multiple> 
+            <select name="location_id[]" class="form-control @if($errors->has('location_id')) is-invalid @endif" name="location_id" multiple> 
               <option value="">Choose</option>
               @foreach($locations as $location)
                 <option {{ $location->id == old('location_id') ? 'selected' : '' }} value="{{ $location->id }}">{{ $location->name }}</option>
