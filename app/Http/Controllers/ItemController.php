@@ -6,18 +6,74 @@ use Illuminate\Http\Request;
 use App\Item;
 use App\Category;
 use DB;
+use Auth;
 
 class ItemController extends Controller
 {
 
     public function index()
     {
-        // $items = DB::table('items')->orderBy('id','desc')->paginate(2);
+        $user = Auth::user();
 
-        $items = Item::orderBy('id','desc')->paginate(2);
+        if($user->type == 'admin'){
+            if(session('current_location')){
+                $items = Item::whereHas('location',function($q) use ($user) {
+                
+                  return $q->where('location_id',session('current_location'));
+        
+                })->orderBy('id','desc')->paginate(2);
 
+            }else{
+                $items = Item::orderBy('id','desc')->paginate(2);
+            }
+
+        }else{
+            $items = Item::whereHas('location',function($q) use ($user) {
+                if(session('current_location')){
+                    $q->where('location_id',session('current_location'));
+                }else{
+                    $q->whereIn('location_id',$user->location->pluck('id')->toArray());
+                }
+    
+            })->orderBy('id','desc')->paginate(2);
+        }
+
+   // 	return response()->json($items);
+    	// return redirect();
     	return view('item.index',compact('items'));
     }
+
+    public function new()
+    {
+
+    	$categories = Category::all();
+
+    	return view('item.new',compact('categories'));
+    }
+
+    public function add(Request $request)
+    {
+    	$request->validate([
+    		'name' => 'required|min:3',
+    		'price' => 'required|numeric',
+            'code' => 'required|unique:items|max:10',
+            'image' => 'mimes:jpeg,png,jpg',
+        ],[],
+            [
+                'name' => 'ឈ្មោះ'
+            ]
+        );
+         
+         
+        $item = New Item;
+        $item->fill($request->all());
+        $item->save();
+
+        $message = 'Success Added';
+       
+        return response()->json(compact('item','message'));
+    }
+
 
     public function create()
     {
@@ -34,7 +90,11 @@ class ItemController extends Controller
     		'price' => 'required|numeric',
             'code' => 'required|unique:items|max:10',
             'image' => 'mimes:jpeg,png,jpg',
-         ]);
+        ],[],
+        [
+            'name' => 'ឈ្មោះ'
+        ]
+    );
          
         $image_name = time().'.'. $request->image->getClientOriginalExtension();
          
@@ -64,8 +124,9 @@ class ItemController extends Controller
     public function edit($id)
     {
         $item = Item::where('id',$id)->first();
+        $categories = Category::all();
 
-        return view('item.edit',compact('item'));
+        return view('item.edit',compact('item','categories'));
     }
 
     public function update(Request $request,$id)

@@ -3,7 +3,7 @@
 
 @section('content')
 <h2>Users</h2>
-<?php var_dump($errors) ?>
+
 <div class="card">
   <div class="card-body">
       <a href="{{ url('/user') }}" class="btn btn-secondary float-right">Return</a> 

@@ -14,6 +14,10 @@
 use App\Http\Middleware\RestrictStatus;
 
 
+Route::get('/test', function () {
+    return view('pages.blank');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -21,6 +25,8 @@ Route::get('/', function () {
 Route::group(['middleware' => ['auth','account']],function(){
     Route::get('/item','ItemController@index');
     Route::get('/item/create','ItemController@create');
+    Route::get('/item/new','ItemController@new');
+    Route::post('/item/add','ItemController@add');
     Route::post('/item/store','ItemController@store');
     Route::get('/item/edit/{id}','ItemController@edit');
     Route::patch('/item/update/{id}','ItemController@update');
@@ -28,8 +34,11 @@ Route::group(['middleware' => ['auth','account']],function(){
 
 
     Route::resource('/location','LocationController');
+    
     Route::resource('/category','CategoryController');
     Route::resource('/user','UserController');
+    Route::get('/user/change-location/{id}','UserController@changeLocation');
+    Route::get('/config/change-language/{lang}','ConfigController@changeLanguage');
     Route::get('/home', 'HomeController@index')->name('home');
 });
 

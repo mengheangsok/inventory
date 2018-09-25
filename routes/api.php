@@ -16,3 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::group(['namespace' => 'Api'],function(){
+    Route::get('/category','CategoryController@index');
+    Route::get('/category/{id}','CategoryController@show');
+
+    Route::get('/location','LocationController@index');
+    Route::get('/location/{id}','LocationController@show');
+});

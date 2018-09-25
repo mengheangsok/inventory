@@ -1,5 +1,22 @@
 
-@extends('layouts.app')
+@extends('layouts.master')
+
+@push('style')
+  <script src="{{ asset('/plugin/summernote.css') }}"></script>
+@endpush
+
+@push('script')
+<script>
+    $('.summernote').summernote();
+  </script>
+@endpush
+
+
+@prepend('script')
+  <script src="{{ asset('/plugin/summernote.js') }}"></script>
+@endprepend
+
+
 
 @section('content')
 <h2>ITEMS</h2>
@@ -51,6 +68,11 @@
                 <option {{ $category->id == old('category_id') ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
               @endforeach
             </select>
+          </div>
+         <div class="form-group row">
+          <label for="category" class="col-sm-2 col-form-label">Description</label>
+          <div class="col-sm-10">
+            <textarea name="description" id="" class="summernote" cols="30" rows="10"></textarea>
           </div>
         </div>
 

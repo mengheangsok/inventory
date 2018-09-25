@@ -27,4 +27,10 @@ class CategoryRequest extends FormRequest
             'name' => 'required'
         ];
     }
+
+    public function attributes(){
+        return [
+            'name' => trans('general.name'),
+        ];
+    }
 }

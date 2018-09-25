@@ -23,6 +23,8 @@ class Account
             return redirect('/login')->withMessage('Your account is net approved');
         }
 
+        \App::setLocale(session('lang'));
+
         return $next($request);
     }
 }

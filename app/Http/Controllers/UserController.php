@@ -9,9 +9,13 @@ use App\Http\Requests\UserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Mail;
 use Auth;
+use App\Notifications\AccountStatus;
+use App\Notifications\ActivateAccount;
+use Illuminate\Notifications\Notifiable;
 
 class UserController extends Controller
 {
+    use Notifiable;
     /**
      * Display a listing of the resource.
      *
@@ -107,13 +111,21 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
+        $old_status = $user->status;
+
         $user->fill($request->all());
 
         $user->save();
 
 
         $user->location()->sync($request->location_id ? : []);
+        
+        if($request->status != $old_status){
+            //Mail::to($user->email)->send(new AccountStatus($user));
 
+          //  $user->notify(new AccountStatus($user));
+        }
+        $user->notify(new ActivateAccount($user));
 
         return redirect()->back()->withSuccess('Successfull Created');
     }
@@ -132,5 +144,14 @@ class UserController extends Controller
 
         return redirect()->back()->withSuccess('Successfull Deleted');
 
+    }
+
+    public function changeLocation($id){
+
+        session(['current_location' => $id]);
+
+        $location = Location::find($id);
+
+        return redirect()->back()->withMessage('Location Changed : '. $location->name);
     }
 }

@@ -12,6 +12,11 @@ class Item extends Model
 	{
 		return $this->belongsTo('App\Category');
 	}
+
+	public function location()
+	{
+		return $this->belongsToMany('App\Location');
+	}
 }
 
 

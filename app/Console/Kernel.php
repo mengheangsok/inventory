@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Console\Commands\DeactiveUserStatus::class,
     ];
 
     /**
@@ -24,8 +24,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // $schedule->command('status:check')->daily();
+       // $schedule->command(DeactiveUserStatus::class)->daily();
         // $schedule->command('inspire')
         //          ->hourly();
+
+  // $schedule->command('status:check');
+        $schedule->command('birthday-wise')->sendOutputTo('test.txt');
     }
 
     /**
